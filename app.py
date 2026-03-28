@@ -12,6 +12,7 @@ Environment variables: see .env.example
 """
 
 import os
+import sys
 import glob
 import uuid
 import subprocess
@@ -64,17 +65,15 @@ def download_video(url: str, output_path: str) -> bool:
         --no-playlist           never downloads a whole playlist
         -q                      quiet mode (logs handled separately)
     """
-    import sys
-
-cmd = [
-    sys.executable, "-m", "yt_dlp",
-    "-o", output_path,
-    "--merge-output-format", "mp4",
-    "--max-filesize", "50m",
-    "--no-playlist",
-    "-q",
-    url,
-]
+    cmd = [
+        sys.executable, "-m", "yt_dlp",
+        "-o", output_path,
+        "--merge-output-format", "mp4",
+        "--max-filesize", "50m",
+        "--no-playlist",
+        "-q",
+        url,
+    ]
     log.info(f"Downloading video: {url}")
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
 
