@@ -65,14 +65,15 @@ def download_video(url: str, output_path: str) -> bool:
         -q                      quiet mode (logs handled separately)
     """
     cmd = [
-        "yt-dlp",
-        "-o", output_path,
-        "--merge-output-format", "mp4",
-        "--max-filesize", "50m",
-        "--no-playlist",
-        "-q",
-        url,
-    ]
+    "python", "-m", "yt_dlp",
+    "-o", output_path,
+    "--merge-output-format", "mp4",
+    "--max-filesize", "50m",
+    "--no-playlist",
+    "--js-runtimes", "node",
+    "-q",
+    url,
+]
     log.info(f"Downloading video: {url}")
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
 
