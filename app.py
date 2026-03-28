@@ -25,6 +25,13 @@ BUCKET_NAME  = os.environ.get("SUPABASE_BUCKET", "frames")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+# Write YouTube cookies from environment variable to a temp file
+COOKIES_PATH = "/tmp/yt-cookies.txt"
+yt_cookies = os.environ.get("YT_COOKIES", "")
+if yt_cookies:
+    with open(COOKIES_PATH, "w") as f:
+        f.write(yt_cookies)
+    log.info("YouTube cookies written to disk")
 
 def is_supported_url(url: str) -> bool:
     supported = [
@@ -43,6 +50,7 @@ def download_video(url: str, output_path: str) -> bool:
         "--merge-output-format", "mp4",
         "--max-filesize", "50m",
         "--no-playlist",
+        "--cookies", COOKIES_PATH,
         url,
     ]
     log.info(f"Downloading video: {url}")
