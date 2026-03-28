@@ -64,13 +64,14 @@ def download_video(url: str, output_path: str) -> bool:
         --no-playlist           never downloads a whole playlist
         -q                      quiet mode (logs handled separately)
     """
-    cmd = [
-    "python", "-m", "yt_dlp",
+    import sys
+
+cmd = [
+    sys.executable, "-m", "yt_dlp",
     "-o", output_path,
     "--merge-output-format", "mp4",
     "--max-filesize", "50m",
     "--no-playlist",
-    "--js-runtimes", "node",
     "-q",
     url,
 ]
