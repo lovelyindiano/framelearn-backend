@@ -78,8 +78,10 @@ def download_video(url: str, output_path: str) -> bool:
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
 
     if result.returncode != 0:
-        log.error(f"yt-dlp error: {result.stderr}")
-        return False
+    log.error(f"yt-dlp stdout: {result.stdout}")
+    log.error(f"yt-dlp stderr: {result.stderr}")
+    log.error(f"yt-dlp returncode: {result.returncode}")
+    return False
 
     log.info("Video downloaded successfully")
     return True
